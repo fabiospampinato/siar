@@ -88,7 +88,7 @@ visit ( archive, file => { // Files only
 visit ( archive, folder => { // Folders only
   folder.name; // => 'folder'
   folder.path; // => 'path/to/folder'
-});
+}, 'folder' );
 
 visit ( archive, entry => { // Files and folders
   if ( 'content' in entry ) {
@@ -96,7 +96,7 @@ visit ( archive, entry => { // Files and folders
   } else {
     console.log ( 'It is a folder', entry );
   }
-});
+}, '*' );
 ```
 
 ## License
