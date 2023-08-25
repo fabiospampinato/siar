@@ -3,13 +3,12 @@
 
 import Int32 from 'int32-encoding';
 import U8 from 'uint8-encoding';
+import {weakMemoize} from './utils';
 import type {FolderEncoded} from './types';
 
 /* MAIN */
 
-//TODO: Cache this on the archive with a WeakMap, to speed-up multiple get calls
-
-const decode = ( archive: Uint8Array ): [folder: FolderEncoded, contents: Uint8Array] => {
+const decode = weakMemoize (( archive: Uint8Array ): [folder: FolderEncoded, contents: Uint8Array] => {
 
   const headerLengthU8 = archive.subarray ( 0, 4 );
   const headerLength = Int32.decode ( headerLengthU8 );
@@ -20,7 +19,7 @@ const decode = ( archive: Uint8Array ): [folder: FolderEncoded, contents: Uint8A
 
   return [folder, contents];
 
-};
+});
 
 /* EXPORT */
 
