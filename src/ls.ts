@@ -28,7 +28,7 @@ const ls = ( archivePath: string, pretty: boolean = false ): void => {
 
         const indentation = color.dim ( '│  '.repeat ( level ) );
         const prefix = color.dim ( `${isLast ? '└' : '├'}── ` );
-        const name = color.bold ( color.cyan ( file.name ) );
+        const name = color.bold.cyan ( file.name );
         const line = `${indentation}${prefix}${name}`;
 
         console.log ( line );
