@@ -2,40 +2,51 @@
 /* IMPORT */
 
 import benchmark from 'benchloop';
-import picolate from '../dist/index.js';
+import fs from 'node:fs';
+import {pack, unpack, visit, get} from '../dist/index.js';
 
 /* MAIN */
 
 benchmark.config ({
-  iterations: 10_000
+  iterations: 1
 });
 
-// benchmark ({
-//   name: 'picolate.compile',
-//   fn: () => {
-//     picolate.compile ( TEMPLATE );
-//   }
-// });
+benchmark ({
+  name: 'pack',
+  fn: () => {
+    pack ( 'node_modules', 'node_modules.asir' );
+  }
+});
 
-// benchmark ({
-//   name: 'picolate.parse',
-//   fn: () => {
-//     picolate.parse ( TEMPLATE );
-//   }
-// });
+benchmark ({
+  name: 'unpack',
+  afterEach: () => {
+    fs.rmdirSync ( 'node_modules_2', { recursive: true } );
+  },
+  fn: () => {
+    unpack ( 'node_modules.asir', 'node_modules_2' );
+  }
+});
 
-// benchmark ({
-//   name: 'picolate.render',
-//   fn: () => {
-//     picolate.render ( TEMPLATE, CONTEXT );
-//   }
-// });
+benchmark ({
+  name: 'visit',
+  fn: () => {
+    const archive = fs.readFileSync ( 'node_modules.asir' );
+    visit ( archive, () => {}, '*' );
+  }
+});
 
-// benchmark ({
-//   name: 'picolate.validate',
-//   fn: () => {
-//     picolate.validate ( TEMPLATE );
-//   }
-// });
+benchmark ({
+  name: 'get',
+  afterEach: () => {
+    fs.unlinkSync ( 'node_modules.asir' );
+  },
+  fn: () => {
+    const archive = fs.readFileSync ( 'node_modules.asir' );
+    visit ( archive, file => {
+      get ( archive, file.path );
+    }, 'file' );
+  }
+});
 
 benchmark.summary ();
