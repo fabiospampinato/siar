@@ -1,11 +1,17 @@
 
 /* MAIN */
 
-const basename = ( path: string ): string => {
+const basename = (() => {
 
-  return path.replace ( /^.*(\\|\/)/, '' );
+  const dirnameRe = /^.*(\\|\/)/;
 
-};
+  return ( path: string ): string => {
+
+    return path.replace ( dirnameRe, '' );
+
+  };
+
+})();
 
 const weakMemoize = <T extends object, U> ( fn: ( arg: T ) => U ): (( arg: T ) => U) => {
 

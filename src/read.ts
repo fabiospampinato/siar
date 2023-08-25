@@ -17,47 +17,55 @@ const CACHE: Record<string, FileDecoded> = {};
 
 const read = ( archivePath: string, archiveFile: string ): FileDecoded | undefined => {
 
-  const fd = fs.openSync ( archivePath, 'r' );
-
   try {
 
-    const hashU8 = new Uint8Array ( 32 );
-    fs.readSync ( fd, hashU8, 0, 32, 0 );
+    const fd = fs.openSync ( archivePath, 'r' );
 
-    const hash = toHex ( hashU8 );
-    const cached = CACHE[hash];
+    try {
 
-    if ( cached ) return cached;
+      const hashU8 = new Uint8Array ( 32 );
+      fs.readSync ( fd, hashU8, 0, 32, 0 );
 
-    const headerLengthU8 = new Uint8Array ( 4 );
-    fs.readSync ( fd, headerLengthU8, 0, 4, 32 );
+      const hash = toHex ( hashU8 );
+      const cached = CACHE[hash];
 
-    const headerLength = Int32.decode ( headerLengthU8 );
-    const headerU8 = new Uint8Array ( headerLength );
-    fs.readSync ( fd, headerU8, 0, headerLength, 32 + 4 );
+      if ( cached ) return cached;
 
-    const header = U8.decode ( headerU8 );
-    const folder = JSON.parse ( header );
+      const headerLengthU8 = new Uint8Array ( 4 );
+      fs.readSync ( fd, headerLengthU8, 0, 4, 32 );
 
-    const encoded = get.encoded ( folder, archiveFile );
+      const headerLength = Int32.decode ( headerLengthU8 );
+      const headerU8 = new Uint8Array ( headerLength );
+      fs.readSync ( fd, headerU8, 0, headerLength, 32 + 4 );
 
-    if ( !encoded ) return;
+      const header = U8.decode ( headerU8 );
+      const folder = JSON.parse ( header );
 
-    const {offset, size, ...base} = encoded;
-    const content = new Uint8Array ( size );
-    fs.readSync ( fd, content, 0, size, 32 + 4 + headerLength + offset );
+      const encoded = get.encoded ( folder, archiveFile );
 
-    const name = basename ( archiveFile );
-    const path = archiveFile.replaceAll ( '\\', '/' );
-    const decoded: FileDecoded = { ...base, name, path, content };
+      if ( !encoded ) return;
 
-    CACHE[hash] = decoded;
+      const {offset, size, ...base} = encoded;
+      const content = new Uint8Array ( size );
+      fs.readSync ( fd, content, 0, size, 32 + 4 + headerLength + offset );
 
-    return decoded;
+      const name = basename ( archiveFile );
+      const path = archiveFile.replaceAll ( '\\', '/' );
+      const decoded: FileDecoded = { ...base, name, path, content };
 
-  } finally {
+      CACHE[hash] = decoded;
 
-    fs.closeSync ( fd );
+      return decoded;
+
+    } finally {
+
+      fs.closeSync ( fd );
+
+    }
+
+  } catch {
+
+    return;
 
   }
 

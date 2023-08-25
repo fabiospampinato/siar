@@ -9,10 +9,18 @@ import type {FileDecoded, FileEncoded, FolderEncoded} from './types';
 
 const get = ( archive: Uint8Array, file: string ): FileDecoded | undefined => {
 
-  const [folder, contents] = decode ( archive );
-  const decoded = get.decoded ( folder, contents, file );
+  try {
 
-  return decoded;
+    const [folder, contents] = decode ( archive );
+    const decoded = get.decoded ( folder, contents, file );
+
+    return decoded;
+
+  } catch {
+
+    return;
+
+  }
 
 };
 

@@ -4,6 +4,8 @@ A simple random-access archive format.
 
 A `siar` archive is a single binary file, containing a sha256 hash of the rest of the archive, followed by the length of the header, followed by the UTF8-encoded JSON header, followed by the concatenated contents of all the files.
 
+Paths inside the archive are always stored using `/` as the separator, with no prefix (e.g. `/` or `./`), and are case sensitive.
+
 ## Features
 
 - The `siar` archive format is super simple.

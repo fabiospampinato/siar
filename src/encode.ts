@@ -19,7 +19,7 @@ const encode = async ( folder: FolderEncoded, contents: Uint8Array[] ): Promise<
   const archive = concat ([ hashPlaceholder, headerLengthU8, headerU8, ...contents ]);
   const hash = await sha256.uint8 ( archive );
 
-  archive.set ( hash, 0 );
+  archive.set ( hash, 0 ); // Writing the actual hash in
 
   return archive;
 
