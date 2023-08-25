@@ -1,0 +1,33 @@
+
+/* IMPORT */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import type {FileDecoded} from './types';
+
+/* MAIN */
+
+const restore = ( filePath: string, file: FileDecoded ): void => {
+
+  const folderPath = path.dirname ( filePath );
+
+  fs.mkdirSync ( folderPath, { recursive: true } );
+  fs.writeFileSync ( filePath, file.content );
+
+  if ( file.mode ) { // Restoring mode
+
+    fs.chmodSync ( filePath, file.mode );
+
+  }
+
+  if ( file.ctime || file.mtime ) { // Restoring ctime and mtime
+
+    fs.utimesSync ( filePath, file.ctime || Date.now (), file.mtime || Date.now () );
+
+  }
+
+};
+
+/* EXPORT */
+
+export default restore;
