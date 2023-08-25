@@ -2,6 +2,7 @@
 /* IMPORT */
 
 import fs from 'node:fs';
+import {exit} from 'specialist';
 import get from './get';
 import restore from './restore';
 
@@ -14,7 +15,7 @@ const extract = ( archivePath: string, archiveFile: string, outputFile: string )
   const archive = fs.readFileSync ( archivePath );
   const decoded = get ( archive, archiveFile );
 
-  if ( !decoded ) return;
+  if ( !decoded ) return exit ( `File not found: "${archiveFile}"` );
 
   restore ( outputFile, decoded );
 
