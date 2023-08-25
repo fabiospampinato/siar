@@ -43,7 +43,7 @@ siar view my-archive.siar path/to/file.txt
 You would use the programmatic API like this:
 
 ```ts
-import {extract, get, ls, make, pack, read, unpack, visit} from 'siar';
+import {extract, get, ls, make, pack, read, unpack, view, visit} from 'siar';
 
 // Pack a folder into an archive -- just like with the "pack" command
 
