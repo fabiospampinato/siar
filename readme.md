@@ -38,7 +38,7 @@ siar extract my-archive.siar path/to/file.txt path/to/output_file.txt
 You would use the programmatic API like this:
 
 ```ts
-import {extract, get, ls, make, pack, unpack, visit} from 'siar';
+import {extract, get, ls, make, pack, read, unpack, visit} from 'siar';
 
 // Pack a folder into an archive -- just like with the "pack" command
 
@@ -55,6 +55,10 @@ ls ( 'my-archive.siar' );
 // Extract a single file from an archive -- just like with the "extract" command
 
 extract ( 'my-archive.siar', 'path/to/file.txt', 'path/to/output_file.txt' );
+
+// Read a single file from an archive -- like "extract" but it just gives you the file
+
+const file = read ( 'my-archive.siar', 'path/to/file.txt' );
 
 // Make an archive from a map of files -- this function works in the browser too
 
