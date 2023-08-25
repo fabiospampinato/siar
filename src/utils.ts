@@ -1,6 +1,12 @@
 
 /* MAIN */
 
+const basename = ( path: string ): string => {
+
+  return path.split ( /\\|\//g ).pop () || '';
+
+};
+
 const weakMemoize = <T extends object, U> ( fn: ( arg: T ) => U ): (( arg: T ) => U) => {
 
   const cache = new WeakMap<T, U>();
@@ -23,4 +29,4 @@ const weakMemoize = <T extends object, U> ( fn: ( arg: T ) => U ): (( arg: T ) =
 
 /* EXPORT */
 
-export {weakMemoize};
+export {basename, weakMemoize};
