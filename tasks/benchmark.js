@@ -36,7 +36,7 @@ benchmark ({
   }
 });
 
-benchmark ({
+benchmark.skip ({
   name: 'extract',
   fn: () => {
     const archive = fs.readFileSync ( 'node_modules.asir' );

@@ -8,7 +8,7 @@ import restore from './restore';
 
 /* MAIN */
 
-//TODO: Write an optimized version of this for Node, otherwise random-access is not worth much
+//TODO: Write an optimized version of this for Node, otherwise random-access is not worth much, though this command shouldn't be used frequently anyway
 
 const extract = ( archivePath: string, archiveFile: string, outputFile: string ): void => {
 
