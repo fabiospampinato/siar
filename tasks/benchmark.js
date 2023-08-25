@@ -3,7 +3,7 @@
 
 import benchmark from 'benchloop';
 import fs from 'node:fs';
-import {pack, unpack, visit, get} from '../dist/index.js';
+import {pack, unpack, visit, extract, get} from '../dist/index.js';
 
 /* MAIN */
 
@@ -33,6 +33,17 @@ benchmark ({
   fn: () => {
     const archive = fs.readFileSync ( 'node_modules.asir' );
     visit ( archive, () => {}, '*' );
+  }
+});
+
+benchmark ({
+  name: 'extract',
+  fn: () => {
+    const archive = fs.readFileSync ( 'node_modules.asir' );
+    visit ( archive, file => {
+      extract ( 'node_modules.asir', file.path, 'temp.txt' );
+      fs.unlinkSync ( 'temp.txt' );
+    }, 'file' );
   }
 });
 
