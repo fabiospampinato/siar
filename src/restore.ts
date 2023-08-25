@@ -22,7 +22,9 @@ const restore = ( filePath: string, file: FileDecoded ): void => {
 
   if ( file.mtime ) {
 
-    fs.utimesSync ( filePath, file.mtime, file.mtime );
+    const time = new Date ( file.mtime );
+
+    fs.utimesSync ( filePath, time, time );
 
   }
 
