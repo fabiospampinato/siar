@@ -2,7 +2,7 @@
   "name": "siar",
   "repository": "github:fabiospampinato/siar",
   "description": "A simple random-access archive format.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "sideEffects": false,
   "bin": "dist/bin.js",
