@@ -35,6 +35,9 @@ siar ls my-archive.siar
 
 # Extract a single file from an archive
 siar extract my-archive.siar path/to/file.txt path/to/output_file.txt
+
+# View a single file from an archive, without extracting it
+siar view my-archive.siar path/to/file.txt
 ```
 
 You would use the programmatic API like this:
@@ -57,6 +60,10 @@ ls ( 'my-archive.siar' );
 // Extract a single file from an archive -- just like with the "extract" command
 
 extract ( 'my-archive.siar', 'path/to/file.txt', 'path/to/output_file.txt' );
+
+// View a single file from an archive, without extracting it -- just like with the "view" command
+
+view ( 'my-archive.siar', 'path/to/file.txt' );
 
 // Read a single file from an archive -- like "extract" but it just gives you the file
 

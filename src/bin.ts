@@ -3,7 +3,7 @@
 /* IMPORT */
 
 import {bin} from 'specialist';
-import {extract, ls, pack, unpack} from '.';
+import {extract, ls, pack, unpack, view} from '.';
 
 /* MAIN */
 
@@ -36,6 +36,13 @@ bin ( 'siar', 'A simple random-access archive format' )
   .argument ( '<folder>', 'The folder to output' )
   .action ( ( options, [archive, folder] ) => {
     return unpack ( archive, folder );
+  })
+  /* VIEW */
+  .command ( 'view', 'View a single file from the archive' )
+  .argument ( '<archive>', 'The archive to view into' )
+  .argument ( '<archiveFile>', 'The file path to view' )
+  .action ( ( options, [archive, archiveFile] ) => {
+    return view ( archive, archiveFile );
   })
   /* RUN */
   .run ();
