@@ -22,9 +22,8 @@ const pack = ( folderPath: string, archivePath: string ): void => {
     const content = fs.readFileSync ( filePath );
     const stat = fs.statSync ( filePath );
     const mode = stat.mode;
-    const ctime = Math.round ( stat.ctimeMs );
     const mtime = Math.round ( stat.mtimeMs );
-    const file: FileDescriptor = { content, mode, ctime, mtime };
+    const file: FileDescriptor = { content, mode, mtime };
 
     files[normPath] = file;
 

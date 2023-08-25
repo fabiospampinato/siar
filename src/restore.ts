@@ -20,9 +20,9 @@ const restore = ( filePath: string, file: FileDecoded ): void => {
 
   }
 
-  if ( file.ctime || file.mtime ) { // Restoring ctime and mtime
+  if ( file.mtime ) {
 
-    fs.utimesSync ( filePath, file.ctime || Date.now (), file.mtime || Date.now () );
+    fs.utimesSync ( filePath, file.mtime, file.mtime );
 
   }
 

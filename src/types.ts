@@ -3,7 +3,6 @@
 
 type FileBase = {
   mode?: number,
-  ctime?: number,
   mtime?: number
 };
 

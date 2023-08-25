@@ -62,7 +62,6 @@ const archive = make ({
   'path/to/file.txt': {
     content: new Uint8Array (),
     mode: 0o644, // Optional
-    ctime: 123456789, // Optional
     mtime: 123456789 // Optional
   },
   'path/to/another-file.txt': {
@@ -81,7 +80,6 @@ visit ( archive, file => { // Files only
   file.path; // => 'path/to/file.txt'
   file.content; // => Uint8Array ()
   file.mode; // => 0o644
-  file.ctime; // => 123456789
   file.mtime; // => 123456789
 });
 
