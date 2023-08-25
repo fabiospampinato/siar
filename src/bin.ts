@@ -18,9 +18,10 @@ bin ( 'siar', 'A simple random-access archive format' )
   })
   /* LS */
   .command ( 'ls', 'List the content of an archive' )
+  .option ( '-p, --pretty', 'Output in a more human-readable format' )
   .argument ( '<archive>', 'The archive to list' )
   .action ( ( options, [archive] ) => {
-    return ls ( archive );
+    return ls ( archive, !!options['pretty'] );
   })
   /* PACK */
   .command ( 'pack', 'Pack a folder into an archive' )

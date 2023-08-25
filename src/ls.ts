@@ -7,33 +7,45 @@ import visit from './visit';
 
 /* MAIN */
 
-const ls = ( archivePath: string ): void => {
+const ls = ( archivePath: string, pretty: boolean = false ): void => {
 
   const archive = fs.readFileSync ( archivePath );
 
-  visit ( archive, ( file, {isLast, level} ) => {
+  if ( pretty ) {
 
-    if ( 'content' in file ) { // File
+    visit ( archive, ( file, {isLast, level} ) => {
 
-      const indentation = color.dim ( '│  '.repeat ( level ) );
-      const prefix = color.dim ( `${isLast ? '└' : '├'}── ` );
-      const name = file.name;
-      const line = `${indentation}${prefix}${name}`;
+      if ( 'content' in file ) { // File
 
-      console.log ( line );
+        const indentation = color.dim ( '│  '.repeat ( level ) );
+        const prefix = color.dim ( `${isLast ? '└' : '├'}── ` );
+        const name = file.name;
+        const line = `${indentation}${prefix}${name}`;
 
-    } else { // Folder
+        console.log ( line );
 
-      const indentation = color.dim ( '│  '.repeat ( level ) );
-      const prefix = color.dim ( `${isLast ? '└' : '├'}── ` );
-      const name = color.bold ( color.cyan ( file.name ) );
-      const line = `${indentation}${prefix}${name}`;
+      } else { // Folder
 
-      console.log ( line );
+        const indentation = color.dim ( '│  '.repeat ( level ) );
+        const prefix = color.dim ( `${isLast ? '└' : '├'}── ` );
+        const name = color.bold ( color.cyan ( file.name ) );
+        const line = `${indentation}${prefix}${name}`;
 
-    }
+        console.log ( line );
 
-  }, '*' );
+      }
+
+    }, '*' );
+
+  } else {
+
+    visit ( archive, file => {
+
+      console.log ( file.path );
+
+    });
+
+  }
 
 };
 
