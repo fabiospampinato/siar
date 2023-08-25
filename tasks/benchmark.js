@@ -14,7 +14,7 @@ benchmark.config ({
 benchmark ({
   name: 'pack',
   fn: () => {
-    pack ( 'node_modules', 'node_modules.asir' );
+    return pack ( 'node_modules', 'node_modules.asir' );
   }
 });
 
@@ -24,7 +24,7 @@ benchmark ({
     fs.rmdirSync ( 'node_modules_2', { recursive: true } );
   },
   fn: () => {
-    unpack ( 'node_modules.asir', 'node_modules_2' );
+    return unpack ( 'node_modules.asir', 'node_modules_2' );
   }
 });
 
@@ -32,7 +32,7 @@ benchmark ({
   name: 'visit',
   fn: () => {
     const archive = fs.readFileSync ( 'node_modules.asir' );
-    visit ( archive, () => {}, '*' );
+    return visit ( archive, () => {}, '*' );
   }
 });
 
@@ -40,7 +40,7 @@ benchmark ({
   name: 'read',
   fn: () => {
     const archive = fs.readFileSync ( 'node_modules.asir' );
-    visit ( archive, file => {
+    return visit ( archive, file => {
       read ( 'node_modules.asir', file.path, 'temp.txt' );
     }, 'file' );
   }
@@ -53,7 +53,7 @@ benchmark ({
   },
   fn: () => {
     const archive = fs.readFileSync ( 'node_modules.asir' );
-    visit ( archive, file => {
+    return visit ( archive, file => {
       get ( archive, file.path );
     }, 'file' );
   }

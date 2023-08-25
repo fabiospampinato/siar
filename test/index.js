@@ -10,11 +10,11 @@ import {get, pack, read, unpack} from '../dist/index.js';
 
 describe ( 'Siar', it => {
 
-  it ( 'can pack and unpack a folder', t => {
+  it ( 'can pack and unpack a folder', async t => {
 
-    pack ( 'node_modules', 'node_modules.siar' );
+    await pack ( 'node_modules', 'node_modules.siar' );
     unpack ( 'node_modules.siar', 'node_modules_2' );
-    pack ( 'node_modules_2', 'node_modules_2.siar' );
+    await pack ( 'node_modules_2', 'node_modules_2.siar' );
 
     const archive1 = fs.readFileSync ( 'node_modules.siar' );
     const archive2 = fs.readFileSync ( 'node_modules_2.siar' );
@@ -27,9 +27,9 @@ describe ( 'Siar', it => {
 
   });
 
-  it ( 'can read a file from an archive', t => {
+  it ( 'can read a file from an archive', async t => {
 
-    pack ( 'node_modules', 'node_modules.siar' );
+    await pack ( 'node_modules', 'node_modules.siar' );
 
     const file = read ( 'node_modules.siar', 'fava/package.json' );
     const content = fs.readFileSync ( 'node_modules/fava/package.json', 'utf8' );
@@ -40,9 +40,9 @@ describe ( 'Siar', it => {
 
   });
 
-  it ( 'can get a file from an archive', t => {
+  it ( 'can get a file from an archive', async t => {
 
-    pack ( 'node_modules', 'node_modules.siar' );
+    await pack ( 'node_modules', 'node_modules.siar' );
 
     const archive = fs.readFileSync ( 'node_modules.siar' );
     const file = get ( archive, 'fava/package.json' );

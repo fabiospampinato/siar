@@ -8,14 +8,17 @@ import type {FolderEncoded} from './types';
 
 /* MAIN */
 
+//TODO: Maybe check hashes for integrity
+
 const decode = weakMemoize (( archive: Uint8Array ): [folder: FolderEncoded, contents: Uint8Array] => {
 
-  const headerLengthU8 = archive.subarray ( 0, 4 );
+  const hash = archive.subarray ( 0, 32 );
+  const headerLengthU8 = archive.subarray ( 32, 32 + 4 );
   const headerLength = Int32.decode ( headerLengthU8 );
-  const headerU8 = archive.subarray ( 4, 4 + headerLength );
+  const headerU8 = archive.subarray ( 32 + 4, 32 + 4 + headerLength );
   const header = U8.decode ( headerU8 );
   const folder = JSON.parse ( header );
-  const contents = archive.subarray ( 4 + headerLength );
+  const contents = archive.subarray ( 32 + 4 + headerLength );
 
   return [folder, contents];
 

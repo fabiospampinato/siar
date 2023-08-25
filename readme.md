@@ -2,7 +2,7 @@
 
 A simple random-access archive format.
 
-A `siar` archive is a single binary file, containing a UTF8-encoded JSON header followed by the concatenated content of the files.
+A `siar` archive is a single binary file, containing a sha256 hash of the rest of the archive, followed by the length of the header, followed by the UTF8-encoded JSON header, followed by the concatenated contents of all the files.
 
 ## Features
 
@@ -42,7 +42,7 @@ import {extract, get, ls, make, pack, read, unpack, visit} from 'siar';
 
 // Pack a folder into an archive -- just like with the "pack" command
 
-pack ( 'my-folder', 'my-archive.siar' );
+await pack ( 'my-folder', 'my-archive.siar' );
 
 // Unpack an archive into a folder -- just like with the "unpack" command
 
@@ -62,7 +62,7 @@ const file = read ( 'my-archive.siar', 'path/to/file.txt' );
 
 // Make an archive from a map of files -- this function works in the browser too
 
-const archive = make ({
+const archive = await make ({
   'path/to/file.txt': {
     content: new Uint8Array (),
     mode: 0o644, // Optional

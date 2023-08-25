@@ -9,7 +9,7 @@ import type {FileDescriptor} from './types';
 
 /* MAIN */
 
-const pack = ( folderPath: string, archivePath: string ): void => {
+const pack = async ( folderPath: string, archivePath: string ): Promise<void> => {
 
   folderPath = path.normalize ( folderPath );
 
@@ -29,7 +29,7 @@ const pack = ( folderPath: string, archivePath: string ): void => {
 
   }
 
-  const archive = make ( files );
+  const archive = await make ( files );
 
   fs.writeFileSync ( archivePath, archive );
 

@@ -6,7 +6,7 @@ import type {FileDescriptor, FolderEncoded} from './types';
 
 /* MAIN */
 
-const make = ( files: Record<string, FileDescriptor> ): Uint8Array => {
+const make = ( files: Record<string, FileDescriptor> ): Promise<Uint8Array> => {
 
   const folder: FolderEncoded = {};
   const contents: Uint8Array[] = [];
