@@ -3,7 +3,7 @@
 
 const basename = ( path: string ): string => {
 
-  return path.split ( /\\|\//g ).pop () || '';
+  return path.replace ( /^.*(\\|\/)/, '' );
 
 };
 

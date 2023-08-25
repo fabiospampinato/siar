@@ -20,7 +20,7 @@ const restore = ( filePath: string, file: FileDecoded ): void => {
 
   }
 
-  if ( file.mtime ) {
+  if ( file.mtime ) { // Restoring mtime
 
     const time = new Date ( file.mtime );
 
